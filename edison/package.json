@@ -1,0 +1,11 @@
+{
+  "name": "meme-noise-attack",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "restify": "~2.8.0",
+    "socket.io": "~1.2.0",
+    "fadecandy": "~1.0.0",
+    "request": "~2.49.0"
+  }
+}
