@@ -1,0 +1,53 @@
+article.attack {
+    width: 100%;
+    height: 100%;
+    display: table;
+    background: black;
+
+    .wrapper-btn {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        font-size: 100px;
+        color: white;
+
+        #killMode {
+            font-size: 100px;
+            margin-bottom: 5%;
+            visibility: hidden;
+        }
+
+        #queueAttack {
+            border: 5px solid white;
+            @include border-radius(10px);
+            width: 80%;
+            padding: 30% 0;
+            margin: 0 auto;
+
+            &.red {background: red;}
+            &.blue {background: blue;}
+            &.green {background: green;}
+            &.purple {background: purple}
+            &.yellow {background: yellow;}
+        }
+
+        #killFlag {
+            border: 5px solid white;
+            @include border-radius(10px);
+            background: yellow;
+            width: 60%;
+            padding: 3% 0;
+            color: black;
+            margin: 0 auto;
+            margin-top: 5%;
+            line-height: 1;
+            font-size: 50px;
+        }
+    }
+}
+
+body.killMode {
+    #killMode {
+        visibility: visible!important;
+    }
+}

@@ -1,0 +1,6 @@
+guard 'livereload' do
+  watch(%r{app/views/.+\.(erb|haml|slim)$})
+  watch(%r{public/.+\.(css|js|html|scss)})
+  watch(%r{app/assets/.+\.(js|css|scss|coffee|erb)$})
+  watch(%r{app/controllers/.+\.(rb)$})
+end

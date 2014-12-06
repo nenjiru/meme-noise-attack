@@ -1,0 +1,133 @@
+article.tweet {
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: white;
+    position: relative;
+
+    #readyMessage {
+        width: 100%;
+        line-height: 1;
+        text-align: center;
+        @include pos(50%,'','',0);
+    }
+
+    .wrapper {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+
+        .bg-hashtag {
+            @include pos(1%,'','',0px);
+            height: 60%;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .gauge-wrapper {
+            height: 63%;
+            background-image: image-url('bg/gauge.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            @include pos(1%,0px,'','');
+
+            .gauge-inner {
+                width: 48%;
+                height: 80%;
+                @include pos(9%,'','',12%);
+
+                .power-gauge {
+                    width: 100%;
+                    height: 0%;
+                    background-image: image-url('content/gauge.png');
+                    background-repeat: no-repeat;
+                    background-position: center bottom;
+                    background-size: cover;
+                    @include pos('','',0%,0%);
+                }
+            }
+        }
+
+        #enemyWrapper {
+            height: 60%;
+            text-align: center;
+            opacity: 0;
+            position: relative;
+            @include transition-property(opacity);
+            @include transition-duration(3s);
+            @include transition-delay(1s);
+
+            &.fade-in {opacity: 1}
+
+            #damageText {
+                width: 100%;
+                @include pos(30%,'','',0px);
+                text-shadow: black 10px 0px 0px, black -10px 0px 0px,
+                             black 0px -10px 0px, black 0px 10px 0px;
+            }
+
+            #enemyImage {
+                height: 100%;
+            }
+
+            .attackEffect {
+                @include pos(0,'','',0);
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .tweet-wrapper {
+            width: 100%;
+            height: 37%;
+            padding-top: 1px;
+            background-image: image-url('bg/message.png');
+            background-repeat: repeat;
+            background-size: 5%;
+
+            .tweet-box {
+                width: 88%;
+                height: 80%;
+                border: 5px solid white;
+                @include border-radius(10px);
+                overflow: auto;
+                padding: 10px 30px;
+                margin: 0 auto;
+                background: black;
+                margin-top: 1%;
+
+                #tweetStream {
+                    li, .TweetElement {
+                        padding: 10px 0;
+                        position: relative;
+                        box-sizing: border-box;
+
+                        .tweet-icon {
+                            @include pos(50%,'','',0%);
+                            height: 80%;
+                        }
+
+                        .tweet-text-wrapper {
+                            @include pos(10%,'','','');
+                            line-height: 1.4em;
+
+                            .tweet-name, .tweet-screenname {
+                                display: inline-block;
+                            }
+
+                            .tweet-text {
+                            }
+                        }
+
+                        &#firstMessage {
+                            line-height: 1.3em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

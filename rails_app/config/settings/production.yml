@@ -1,0 +1,9 @@
+tweet:
+  stream:
+    interval: 1000
+
+  color:
+    interval: 1000
+
+attack:
+  interval: 2600

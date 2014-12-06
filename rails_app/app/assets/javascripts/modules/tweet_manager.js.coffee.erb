@@ -1,0 +1,72 @@
+@MOGRA = @MOGRA || {}
+
+class TweetManager
+    # private
+    # ===========
+    _streamApiPath = '<%= Settings.tweet.api.stream.path %>'
+    _lengthApiPath = '<%= Settings.tweet.api.length.path %>'
+    _colorApiPath  = '<%= Settings.tweet.api.color.path %>'
+    _createTweetElement = (tweets) ->
+        elements = []
+        for tweet in tweets
+            $elmTweet    = $ '<li class="tweetElement">'
+            $icon        = $ '<img class="tweet-icon tweetIcon">'
+            $textWrapper = $ '<div class="tweet-text-wrapper tweetTextWrapper">'
+            $screenname  = $ '<p class="tweet-screenname tweetScreenName">'
+            $name        = $ '<p class="tweet-name tweetName">'
+            $text        = $ '<p class="tweet-text">'
+
+            $icon.attr 'src', tweet.profile_image_url
+            $screenname.html "(@#{tweet.screen_name})"
+            $name.html tweet.name
+            $text.html tweet.text
+
+            $textWrapper
+                .append $name
+                .append $screenname
+                .append $text
+
+            $elmTweet
+                .append $icon
+                .append $textWrapper
+
+            elements.push
+                elm:       $elmTweet
+                createdAt: tweet.created_at
+
+        return elements
+
+
+    # constructor
+    # ===========
+
+
+    # public
+    # ===========
+    getLength: (callback) ->
+        $.ajax
+          type:    'GET'
+          url:     _lengthApiPath
+          success: (data) =>
+            callback data.response.length
+        return @
+
+    getStream: (callback, baseTime='') ->
+        if baseTime is '' then params = '' else params = "base_time=#{baseTime}"
+
+        $.ajax
+            type:    'GET'
+            url:     _streamApiPath
+            data:    params
+            success: (data) ->
+                callback _createTweetElement(data.response.tweets)
+        return @
+
+    getColor: (callback) ->
+        $.ajax
+            type: 'GET'
+            url: _colorApiPath
+            success: (data) ->
+                callback data.response.color
+
+@MOGRA.TweetManager = TweetManager

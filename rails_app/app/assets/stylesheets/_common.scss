@@ -1,0 +1,14 @@
+@font-face {
+    font-family: famicon;
+    src: url(/font/famicon.woff), url(/font/famicon.ttf);
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: famicon;
+    overflow: hidden;
+}
+
+.hide {display: none!important;}
+.clear {opacity: 0;}

@@ -1,0 +1,23 @@
+@MOGRA = @MOGRA || {}
+
+class Utility
+    # private
+    # ===========
+
+
+    # constructor
+    # ===========
+
+
+    # public
+    # ===========
+    animateScrollBottom: ($elm, interval = 100, callback = ->) ->
+        outerHeight = do $elm.height
+        innerHeight = do $elm.children().height
+
+        $elm.animate
+            scrollTop: innerHeight - outerHeight
+        , interval
+        , callback
+
+@MOGRA.Utility = Utility

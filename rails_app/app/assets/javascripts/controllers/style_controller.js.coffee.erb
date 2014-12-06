@@ -1,0 +1,58 @@
+$elmGaugeWrapper = $ '<%= Settings.selector.gauge_wrapper %>'
+$elmBgHashtag    = $ '<%= Settings.selector.bg_hashtag %>'
+$elmTweetWrapper = $ '<%= Settings.selector.tweet_wrapper %>'
+$elmEnemyWrapper = $ '<%= Settings.selector.enemy_wrapper %>'
+$elmTweetBox     = $ '<%= Settings.selector.tweet_box %>'
+$elmReadyMessage = $ '<%= Settings.selector.ready_message %>'
+
+
+# setStyle
+###################
+setStyle = ->
+    $elmGaugeWrapper.css 'width', do $elmGaugeWrapper.outerHeight * .2
+    $elmBgHashtag.css 'width', do $elmBgHashtag.outerHeight * .76
+    $elmTweetWrapper.css 'height', do $(window).height - do $elmEnemyWrapper.outerHeight
+
+    boxHeight = do $elmTweetBox.innerHeight
+
+    $("""
+        <style>
+            #{'<%= Settings.selector.tweet_element %>'} {
+                height: #{boxHeight}px;
+            }
+
+            #{'<%= Settings.selector.tweet_icon %>'} {
+                margin-top: #{boxHeight * .8 * -.5}px;
+            }
+
+            #{'<%= Settings.selector.tweet_text_wrapper %>'} {
+                left: #{boxHeight}px;
+                font-size: #{do $(window).width * .02}px;
+            }
+
+            #{'<%= Settings.selector.tweet_screen_name %>'},
+            #{'<%= Settings.selector.tweet_name %>'} {
+                font-size: #{do $(window).width * .03}px;
+            }
+
+            #{'<%= Settings.selector.first_message %>'} {
+                font-size: #{do $(window).width * .06}px;
+            }
+
+            #{'<%= Settings.selector.ready_message %>'} {
+                font-size: #{do $(window).height * .15}px;
+                height: #{do $(window).height * .15}px;
+                margin-top: #{do $(window).height * .15 * -.5}px;
+            }
+
+            #{'<%= Settings.selector.damage_text %>'} {
+                font-size: #{do $(window).height / 3.4}px;
+            }
+        </style>
+    """).appendTo($ 'body')
+
+    $elmReadyMessage.removeClass 'clear'
+
+# entry point
+###################
+do setStyle

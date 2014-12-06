@@ -1,0 +1,112 @@
+# configure
+###################
+MOGRA      = @MOGRA
+MOGRA.Page = MOGRA.Page || {}
+
+
+streamInterval  = <%= Settings.tweet.stream.interval %>
+reconnectTime   = <%= Settings.tweet.stream.reconnect_time %>
+latestCreatedAt = null
+
+maxPower        = <%= Settings.tweet.power.max_value %>
+currentPower    = 0
+
+currentColor    = '<%= Settings.tweet.api.color.default %>'
+colorInterval   = <%= Settings.tweet.color.interval %>
+
+currentLength   = 0
+
+attackInterval  = <%= Settings.attack.interval %>
+
+
+$elmTweetBox          = $ '<%= Settings.selector.tweet_box %>'
+$elmStream            = $ '<%= Settings.selector.tweet_stream %>'
+$elmEnemyWrapper      = $ '<%= Settings.selector.enemy_wrapper %>'
+$elmEnemyImage        = $ '<%= Settings.selector.enemy_image %>'
+$elmPowerGauge        = $ '<%= Settings.selector.power_gauge %>'
+$elmGaugeWrapper      = $ '<%= Settings.selector.gauge_wrapper %>'
+$elmDamageText        = $ '<%= Settings.selector.damage_text %>'
+$elmReadyMessage      = $ '<%= Settings.selector.ready_message %>'
+$elmScreenWrapper     = $ '<%= Settings.selector.screen_wrapper %>'
+$elmFirstMessage      = $ '<%= Settings.selector.first_message %>'
+
+
+util  = new MOGRA.Utility
+tm    = new MOGRA.TweetManager
+enemy = new MOGRA.Enemy $elmEnemyImage, $elmDamageText
+am    = new MOGRA.AttackManager
+
+
+# appendTweet
+###################
+appendTweet = (tweetElements) ->
+    length = tweetElements.length
+
+    return setTimeout( ->
+        tm.getStream appendTweet, latestCreatedAt
+    , reconnectTime) if length is 0
+
+    for index in [0..length - 1]
+        do (index) ->
+            setTimeout ->
+                $elmStream.append tweetElements[index].elm
+                util.animateScrollBottom $elmTweetBox
+                do incrementPower
+                currentLength++
+
+                if index is length - 1
+                    latestCreatedAt = tweetElements[index].createdAt
+                    tm.getStream appendTweet, latestCreatedAt
+            , streamInterval * index + streamInterval * do Math.random
+
+
+# incrementPower
+###################
+incrementPower = ->
+    return $elmGaugeWrapper.addClass 'max' if currentPower + 1 > maxPower
+
+    $elmGaugeWrapper.removeClass 'max'
+    setPower Math.round((++currentPower / maxPower) * 100)
+
+
+# setPower
+###################
+setPower = (power) ->
+    currentPower = power
+    $elmPowerGauge.height "#{power}%"
+
+
+# setColor
+###################
+setColor = (color) ->
+    currentColor = color
+
+
+# init
+###################
+init = ->
+    tm.getStream appendTweet
+    setInterval ->
+        tm.getColor setColor
+    , colorInterval
+    timerMonitorAttack = setInterval ->
+        am.getStatus
+            enemy:        enemy
+            currentColor: currentColor
+            currentPower: currentPower
+            setPower:     setPower
+            timer:        timerMonitorAttack
+    , attackInterval
+
+
+# entry point
+###################
+MOGRA.Page.tweet = ->
+    $(window).on 'click', ->
+        $elmReadyMessage.addClass 'hide'
+        $elmScreenWrapper.css 'opacity', 1
+        $elmEnemyWrapper.addClass 'fade-in'
+        setTimeout ->
+            $elmFirstMessage.removeClass 'hide'
+        , 3500
+        setTimeout init, 5000

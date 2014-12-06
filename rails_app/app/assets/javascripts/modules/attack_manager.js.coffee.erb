@@ -1,0 +1,42 @@
+@MOGRA = @MOGRA || {}
+
+class AttackManager
+    # private
+    # ===========
+    _checkApiPath = '<%= Settings.attack.api.check.path %>'
+    _queueApiPath = '<%= Settings.attack.api.queue.path %>'
+    _killApiPath  = '<%= Settings.attack.api.kill.path %>'
+
+
+    # constructor
+    # ===========
+
+
+    # public
+    # ===========
+    getStatus: (callbackData) ->
+        $.ajax
+          type:    'GET'
+          url:     _checkApiPath
+          success: (data) ->
+            console.log data.response
+            if data.response.attack
+                if data.response.kill
+                    callbackData.currentColor = 'special'
+                    clearInterval callbackData.timer
+
+                callbackData.enemy.attack callbackData
+        return @
+
+    queueAttack: ->
+        $.ajax
+          type: 'GET'
+          url:  _queueApiPath
+        return @
+
+    sendKillFlag: ->
+        $.ajax
+            type: 'GET'
+            url:  _killApiPath
+
+@MOGRA.AttackManager = AttackManager

@@ -1,0 +1,77 @@
+tweet:
+  api:
+    stream:
+      limit:          50
+      path:           '/api/tweets/stream'
+    length:
+      path:           '/api/tweets/length'
+    color:
+      path:           '/api/tweets/color'
+      default:        'red'
+
+  stream:
+    interval:         2000
+    reconnect_time:   1000
+    search_hashtag:   '#akimake'
+
+  color:
+    interval:       5000
+    list:
+      '赤':       'red'
+      'あか':     'red'
+      '青':       'blue'
+      'あお':     'blue'
+      '緑':       'green'
+      'みどり':   'green'
+      '黃':       'yellow'
+      'きいろ':   'yellow'
+      '紫':       'purple'
+      'むらさき': 'purple'
+  power:
+    max_value: 100
+
+attack:
+  api:
+    check:
+      path: '/api/attacks/check'
+    queue:
+      path: '/api/attacks/queue'
+    kill:
+      path: '/api/attacks/kill'
+  interval: 2600
+
+enemy:
+  blink:
+    time:       150
+  damage:
+    rate:       100
+    miss:       'ミス！'
+    max_value:  9999
+
+selector:
+  ready_message:       '#readyMessage'
+  screen_wrapper:      '#screenWrapper'
+
+  tweet_wrapper:       '#tweetWrapper'
+  tweet_box:           '#tweetBox'
+  tweet_stream:        '#tweetStream'
+  tweet_element:       '.tweetElement'
+  tweet_icon:          '.tweetIcon'
+  tweet_text_wrapper:  '.tweetTextWrapper'
+  tweet_screen_name:   '.tweetScreenName'
+  tweet_name:          '.tweetName'
+
+  first_message:       '#firstMessage'
+
+  enemy_wrapper:       '#enemyWrapper'
+  enemy_image:         '#enemyImage'
+  damage_text:         '#damageText'
+
+  gauge_wrapper:       '#gaugeWrapper'
+  power_gauge:         '#powerGauge'
+
+  bg_hashtag:          '#bgHashtag'
+
+  queue_attack:        '#queueAttack'
+  kill_flag:           '#killFlag'
+  kill_mode:           '#killMode'

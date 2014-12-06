@@ -1,0 +1,12 @@
+MOGRA      = @MOGRA
+MOGRA.Page = MOGRA.Page || {}
+
+path = location.pathname
+
+init = ->
+    if /\/tweet/i.test path
+        do MOGRA.Page.tweet
+    if /\/attack/i.test path
+        do MOGRA.Page.attack
+
+@onload = init

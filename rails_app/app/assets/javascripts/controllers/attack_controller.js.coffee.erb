@@ -1,0 +1,37 @@
+# configure
+###################
+MOGRA      = @MOGRA
+MOGRA.Page = MOGRA.Page || {}
+
+currentColor    = '<%= Settings.tweet.api.color.default %>'
+colorInterval   = <%= Settings.tweet.color.interval %>
+
+tm = new MOGRA.TweetManager
+am = new MOGRA.AttackManager
+
+$elmBtnQueueAttack = $ '<%= Settings.selector.queue_attack %>'
+$elmBtnKillFlag    = $ '<%= Settings.selector.kill_flag %>'
+$elmKillMode    = $ '<%= Settings.selector.kill_mode %>'
+
+
+# setColor
+###################
+setColor = (color) ->
+    currentColor = color
+    $elmBtnQueueAttack
+        .html "#{color} attack!!".toUpperCase()
+        .removeClass()
+        .addClass color
+
+
+# entry point
+###################
+MOGRA.Page.attack = ->
+    setInterval ->
+        tm.getColor setColor
+    , colorInterval
+    $elmBtnQueueAttack.on 'touchstart', am.queueAttack
+    $elmBtnKillFlag.on 'click', ->
+        do am.sendKillFlag
+        $ 'body'
+            .addClass 'killMode'

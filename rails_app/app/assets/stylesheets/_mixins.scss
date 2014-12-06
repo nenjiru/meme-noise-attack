@@ -1,0 +1,8 @@
+@mixin pos($top: 0, $right: 0, $bottom: 0, $left: 0) {
+    position: absolute;
+
+    @if $left   != '' { left: $left; }
+    @if $top    != '' { top: $top; }
+    @if $right  != '' { right: $right; }
+    @if $bottom != '' { bottom: $bottom; }
+}

@@ -1,0 +1,89 @@
+@MOGRA = @MOGRA || {}
+
+class Enemy
+    # private
+    # ===========
+    _blinkTime           = <%= Settings.enemy.blink.time %>
+    _damageRate          = <%= Settings.enemy.damage.rate %>
+    _missText            = '<%= Settings.enemy.damage.miss %>'
+    _maxDamage           = <%= Settings.enemy.damage.max_value %>
+    _effectFilePath      =
+        red:     '<%= asset_path "attack/red.gif" %>'
+        green:   '<%= asset_path "attack/green.gif" %>'
+        blue:    '<%= asset_path "attack/blue.gif" %>'
+        purple:  '<%= asset_path "attack/purple.gif" %>'
+        yellow:  '<%= asset_path "attack/yellow.gif" %>'
+        special: '<%= asset_path "attack/special.gif" %>'
+
+
+    # constructor
+    # ===========
+    constructor: (@elm, @damage) ->
+
+
+    # public
+    # ===========
+    attack: (data) ->
+        damage = Math.round do Math.random * data.currentPower
+        return @popupDamage _missText if damage is 0
+        data.setPower data.currentPower - damage
+
+        # make random gap between -50 and +50
+        damage = damage * _damageRate + (Math.round(do Math.random * _damageRate) - _damageRate)
+        damage = _maxDamage if damage > _maxDamage
+
+        @appendEffect data.currentColor
+
+        if data.currentColor is 'special'
+            damage = _maxDamage
+            setTimeout =>
+                @replaceKillImage()
+            , 700
+
+        setTimeout =>
+            @popupDamage damage
+            @blink()
+        , 700
+
+        return @
+
+    blink: ->
+        for index in [0..1]
+            do (index) =>
+                setTimeout =>
+                    @elm.addClass 'clear'
+                    setTimeout =>
+                        @elm.removeClass 'clear'
+                    , _blinkTime
+                , _blinkTime * index * 2
+
+        return @
+
+    popupDamage: (damage) ->
+        @damage.html damage
+        @damage.animate
+            top: '0%'
+        , 300, 'easeOutCubic', =>
+            @damage.animate
+              top: '30%'
+            , 600, 'easeOutBounce', =>
+                setTimeout =>
+                    @damage.html ''
+                , 1000
+
+        return @
+
+    appendEffect: (color) ->
+        $effect = $ "<img src=\"#{_effectFilePath[color]}?#{new Date - 0}\" class=\"attackEffect\">"
+        @elm.after $effect
+        setTimeout ->
+            do $effect.remove
+            $effect = null
+        , 700
+        return @
+
+    replaceKillImage: ->
+        @elm.attr
+            src: "<%= asset_path 'content/enemy_crash.gif' %>?#{new Date - 0}"
+
+@MOGRA.Enemy = Enemy

@@ -1,0 +1,24 @@
+<article class="tweet">
+  <p id="readyMessage" class="clear">PRESS START</p>
+  <div id="screenWrapper" class="wrapper">
+    <p id="bgHashtag" class="bg-hashtag"><%= image_tag 'bg/hashtag.png' %></p>
+    <div id="gaugeWrapper" class="gauge-wrapper">
+      <div class="gauge-inner">
+        <p id="powerGauge" class="power-gauge"></p>
+      </div>
+    </div>
+
+    <div id="enemyWrapper">
+      <p id="damageText"></p>
+      <%= image_tag 'content/enemy.gif', { :id => 'enemyImage' } %>
+    </div>
+
+    <div id="tweetWrapper" class="tweet-wrapper">
+      <div id="tweetBox" class="tweet-box">
+        <ul id="tweetStream">
+          <li id="firstMessage" class="hide tweetElement">モンスターがあらわれた！！</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
