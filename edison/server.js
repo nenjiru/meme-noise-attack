@@ -14,7 +14,7 @@
 */
 var restify = require('restify'),
     socket  = require('socket.io'),
-    OPC     = require('opc'),
+    OPC     = require('fadecandy/OPC'),
     request = require('request');
 
 /*
@@ -121,6 +121,6 @@ function getColor()
 */
 
 // Main loop
+// setInterval(getColor, TWEET_COLOR_DELAY);
 setInterval(update, 1000/FPS);
-setInterval(getColor, TWEET_COLOR_DELAY);
 
