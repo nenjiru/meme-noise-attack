@@ -14,7 +14,7 @@
 */
 var restify = require('restify'),
     socket  = require('socket.io'),
-    OPC     = require('fadecandy/OPC'),
+    OPC     = require('fadecandy/opc'),
     request = require('request');
 
 /*
