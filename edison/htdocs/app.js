@@ -11,6 +11,8 @@
         _hsl,
         _rgb = { r:0, g:0, b:0 };
 
+    var _pastRGB = _rgb;
+
     /**
      * DOM
      */
@@ -52,7 +54,11 @@
     setInterval(function ()
     {
         // sendign node server
-        socket.emit('sendColor', { rgb: _rgb });
+        if (_pastRGB != _rgb)
+        {
+            socket.emit('sendColor', { rgb: _rgb });
+            _pastRGB = _rgb;
+        }
     }, 1000/30);
 
     /*
